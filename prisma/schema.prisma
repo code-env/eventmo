@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  username       String?
+  email          String
+  profilePicture String?
+  clerkId        String  @unique
+  isPaid         Boolean @default(false)
+  payment        Payment @default(NONE)
+
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Event        Event[]
+  Organization Organization[]
+}
+
+model Event {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  key     String   @unique
+  dueDate DateTime
+
+  creatorId      String       @db.ObjectId
+  creator        User         @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  organizationId String       @db.ObjectId
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Organization {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @default("UNTITLED")
+
+  creatorId String @db.ObjectId
+  creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Event     Event[]
+}
+
+enum Payment {
+  NONE
+  MONTHLY
+  YEARLY
+  FOREVER
+}
