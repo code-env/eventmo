@@ -1,6 +1,6 @@
 // import { auth } from "@clerk/nextjs";
 import { db } from "./db";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function getCurrentUser() {
   try {
@@ -10,7 +10,7 @@ export async function getCurrentUser() {
 
     const userInDb = await db.user.findUnique({
       where: {
-        userId: user?.id,
+        clerkId: user?.id,
       },
     });
 
@@ -18,7 +18,7 @@ export async function getCurrentUser() {
 
     const createNewUserInDb = await db.user.create({
       data: {
-        userId: user.id,
+        clerkId: user.id,
         username: user.username as string,
         email: user.emailAddresses[0].emailAddress,
       },

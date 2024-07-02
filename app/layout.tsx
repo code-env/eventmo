@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
 import localFont from "next/font/local";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const satoshi = localFont({
   src: [
@@ -51,10 +51,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={satoshi.className}>
-        <main className="min-h-screen">{children}</main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={satoshi.className}>
+          <main className="min-h-screen">{children}</main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
