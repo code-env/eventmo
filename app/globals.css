@@ -57,7 +57,23 @@
     @apply max-w-7xl w-full mx-auto;
   }
 
+  .sidebar {
+    display: none !important;
+  }
+
+  .create-page {
+    height: calc(100vh - 120px);
+  }
+
   .center {
     @apply flex items-center justify-center;
+  }
+
+  .dropzone button {
+    background: #000 !important;
+    cursor: pointer !important;
+  }
+  .dropzone label {
+    color: #000 !important;
   }
 }

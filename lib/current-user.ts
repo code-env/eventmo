@@ -1,4 +1,3 @@
-// import { auth } from "@clerk/nextjs";
 import { db } from "./db";
 import { currentUser } from "@clerk/nextjs/server";
 
