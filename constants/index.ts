@@ -1,16 +1,11 @@
 import { useMemo } from "react";
 
-export const sidebarRoutes = () => {
+export const sidebarRoutes = (Id: string) => {
   const routes = useMemo(
     () => [
       {
-        label: "Projects",
-        href: "/manage/projects",
-        icon: "MemoryStick",
-      },
-      {
         label: "Settings",
-        href: "/manage/settings",
+        href: `/manage/${Id}/settings`,
         icon: "UserCog",
       },
     ],

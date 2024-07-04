@@ -120,7 +120,7 @@ const SignIn = () => {
                 )}
               />
             </div>
-            <Button type="submit" className="w-full" variant="zbtn">
+            <Button type="submit" className="w-full">
               Login
             </Button>
           </div>

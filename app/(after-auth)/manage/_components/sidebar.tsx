@@ -6,9 +6,13 @@ import SidebarItem from "./sidebar-item";
 import { icons } from "lucide-react";
 import Feedback from "@/components/modals/feedback";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const Sidebar = ({ userId, isOrg }: { userId: string; isOrg: boolean }) => {
-  const routes = sidebarRoutes();
+  const pathname = usePathname();
+  // console.log(pathname.split("/")[2]);
+
+  const routes = sidebarRoutes(pathname.split("/")[2]);
 
   // console.log(isOrg);
 

@@ -14,12 +14,13 @@ const Settings = async () => {
   const user = await getCurrentUser();
 
   if (!user) return;
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-6">
       <div className="flex flex-col gap-10">
-        <Account email={user.email} username={user.username} />
+        <Account email={user.email} username={user.username as string} />
         <Customization />
-        <Danger username={user.username} />
+        <Danger username={user.username as string} />
       </div>
     </div>
   );

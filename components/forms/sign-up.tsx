@@ -133,7 +133,6 @@ const Register = () => {
             type="submit"
             className="disabled:opacity-50 disabled:cursor-not-allowed w-full"
             disabled={isSubmitting}
-            variant="zbtn"
           >
             Create an Account
           </Button>

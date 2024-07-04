@@ -76,4 +76,8 @@
   .dropzone label {
     color: #000 !important;
   }
+
+  .calc-height {
+    height: calc(100vh - 60px);
+  }
 }

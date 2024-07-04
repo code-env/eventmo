@@ -23,7 +23,7 @@ import Feedback from "@/components/modals/feedback";
 const Header = ({ userId }: { userId: string }) => {
   const { signOut } = useClerk();
   const pathname = usePathname();
-  const routes = sidebarRoutes();
+  const routes = sidebarRoutes(pathname.split("/")[2]);
   const router = useRouter();
 
   const handleSignOut = () => {
@@ -61,9 +61,7 @@ const Header = ({ userId }: { userId: string }) => {
           </SheetContent>
         </Sheet>
         <div className="flex gap-3 items-center">
-          {pathname.includes("manage/projects") && (
-            <CreateNewProject userId={userId!} />
-          )}
+          {pathname.includes("manage") && <CreateNewProject userId={userId!} />}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">

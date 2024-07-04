@@ -36,3 +36,17 @@ export async function createNewOrg(
 
   return newOrg;
 }
+
+export async function useFindOrg(orgId: string) {
+  if (!orgId) return;
+
+  const org = await db.organization.findUnique({
+    where: {
+      key: orgId,
+    },
+  });
+
+  if (org) return org;
+
+  return null;
+}
