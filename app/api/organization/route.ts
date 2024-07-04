@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 import { ROLE } from "@prisma/client";
 import { generateId } from "@/actions";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -33,6 +34,8 @@ export async function POST(req: Request) {
         },
       },
     });
+
+    revalidatePath("/");
 
     return NextResponse.json(team);
   } catch (error: any) {

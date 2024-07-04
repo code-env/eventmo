@@ -23,3 +23,25 @@ export async function useOrganization() {
     return error.message;
   }
 }
+
+export async function useOrganizations() {
+  try {
+    const user = await getCurrentUser();
+
+    const organizations = await db.organization.findMany({
+      where: {
+        members: {
+          some: {
+            userId: user?.id,
+          },
+        },
+      },
+    });
+
+    if (organizations) return organizations;
+
+    return null;
+  } catch (error: any) {
+    return error.message;
+  }
+}

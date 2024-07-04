@@ -1,4 +1,5 @@
 import { useFindOrg } from "@/actions/organisation";
+import OrgEvents from "@/components/shared/org-events";
 import React from "react";
 
 const OrgId = async ({ params }: { params: { orgId: string } }) => {
@@ -13,7 +14,7 @@ const OrgId = async ({ params }: { params: { orgId: string } }) => {
       </div>
     );
 
-  return <div>NOthing</div>;
+  return <OrgEvents orgKey={organizaiton.key} />;
 };
 
 export default OrgId;

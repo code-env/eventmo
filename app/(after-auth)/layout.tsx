@@ -2,7 +2,7 @@ import Sidebar from "./manage/_components/sidebar";
 import React, { ReactNode } from "react";
 import Header from "./manage/_components/header";
 import { getCurrentUser } from "@/lib/current-user";
-import { useOrganization } from "@/lib/user-org";
+import { useOrganization, useOrganizations } from "@/lib/user-org";
 import { cn } from "@/lib/utils";
 
 const MangeLayout = async ({ children }: { children: ReactNode }) => {
@@ -10,12 +10,17 @@ const MangeLayout = async ({ children }: { children: ReactNode }) => {
 
   if (!user) return;
   const organizaiton = await useOrganization();
+  const organizaitons = await useOrganizations();
 
   return (
     <div className="min-h-screen flex flex-col ">
       <Header userId={user.id} />
       <div className="flex flex-1 h-full lg:max-w-7xl w-full mx-auto">
-        <Sidebar userId={user.id} isOrg={organizaiton ? true : false} />
+        <Sidebar
+          userId={user.id}
+          isOrg={organizaiton ? true : false}
+          organizations={organizaitons}
+        />
         <main className={cn("flex flex-[3] flex-col gap-4 lg:gap-6")}>
           {children}
         </main>
