@@ -74,7 +74,7 @@ const Sidebar = ({
                 <div className="flex items-center justify-between">
                   <p>{org.name}</p>
                 </div>
-                {/* <nav className="grid items-start pr-2 text-sm font-medium">
+                <nav className="grid items-start pr-2 text-sm font-medium">
                   {routes.map((route, index) => (
                     <SidebarItem
                       href={route?.href!}
@@ -83,7 +83,8 @@ const Sidebar = ({
                       key={index}
                     />
                   ))}
-                </nav> */}
+                </nav>{" "}
+                *
               </div>
             ))}
           </Accordion>
