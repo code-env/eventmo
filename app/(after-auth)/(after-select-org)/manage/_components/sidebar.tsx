@@ -10,16 +10,40 @@ import { usePathname } from "next/navigation";
 import { Organization } from "@prisma/client";
 import CreateOrganizationModal from "@/components/modals/create-org";
 import { useLocalStorage } from "usehooks-ts";
+import Link from "next/link";
+import { Accordion } from "@/components/ui/accordion";
 
 const Sidebar = ({
   userId,
-  isOrg,
   organizations,
+  storageKey = "nothing-string",
 }: {
   userId: string;
-  isOrg: boolean;
   organizations: Organization[];
+  storageKey?: string;
 }) => {
+  const [isExpanded, setIsExpanded] = useLocalStorage<Record<string, any>>(
+    storageKey,
+    {}
+  );
+
+  const defaultAccordionValue: string[] = Object.keys(isExpanded).reduce(
+    (acc: string[], key: string) => {
+      if (isExpanded[key]) {
+        acc.push(key);
+      }
+      return acc;
+    },
+    []
+  );
+
+  const onExpand = (id: string) => {
+    setIsExpanded((curr) => ({
+      ...curr,
+      [id]: !isExpanded[id],
+    }));
+  };
+
   const pathname = usePathname();
   // console.log(pathname.split("/")[2]);
   const routes = sidebarRoutes(pathname.split("/")[2]);
@@ -27,19 +51,24 @@ const Sidebar = ({
   return (
     <aside
       className={cn(
-        "hidden border-r md:block flex-1 py-4 sticky top-14 sm-height px-4 2xl:px-0",
-        {
-          "sidebar nothing": isOrg === false,
-        }
+        "hidden border-r md:block flex-1 py-4 sticky top-14 sm-height px-4 2xl:px-0"
       )}
     >
       <div className="flex-1  h-full pr-2">
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <p>Organizations</p>
-            {/* <CreateOrganizationModal /> */}
+            <Link href="/select-org">
+              <button className="w-8 h-8 center hover:bg-neutral-200 rounded transition-all duration-150">
+                <Plus className="w-4 h-4" />
+              </button>
+            </Link>
           </div>
-          <div className="flex flex-col gap-5">
+          <Accordion
+            defaultValue={defaultAccordionValue}
+            type="multiple"
+            className="space-y-2"
+          >
             {organizations.map((org) => (
               <div key={org.id}>
                 <div className="flex items-center justify-between">
@@ -57,7 +86,7 @@ const Sidebar = ({
                 </nav> */}
               </div>
             ))}
-          </div>
+          </Accordion>
         </div>
         <Feedback userId={userId} />
       </div>
