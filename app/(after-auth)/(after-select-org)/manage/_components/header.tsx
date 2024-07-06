@@ -3,6 +3,8 @@
 import { User, Menu, icons } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
+import { Organization } from "@prisma/client";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,17 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logo from "@/components/logo";
-import { sidebarRoutes } from "@/constants";
-import SidebarItem from "./sidebar-item";
 import CreateNewProject from "@/components/modals/create-project";
-import Feedback from "@/components/modals/feedback";
 import Sidebar from "./sidebar";
-import { Organization } from "@prisma/client";
 
 const Header = ({ userId, orgs }: { userId: string; orgs: Organization[] }) => {
   const { signOut } = useClerk();
   const pathname = usePathname();
-  const routes = sidebarRoutes(pathname.split("/")[2]);
   const router = useRouter();
 
   const handleSignOut = () => {
@@ -33,7 +30,7 @@ const Header = ({ userId, orgs }: { userId: string; orgs: Organization[] }) => {
   };
 
   return (
-    <header className="flex h-14 items-center gap-4 border-b sticky bg-background top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
+    <header className="flex h-14 items-center gap-4 border-b sticky bg-background border-border top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
       <div className="flex lg:max-w-7xl lg:mx-auto w-full gap-3 justify-between">
         <Logo />
         <Sheet>
@@ -67,8 +64,11 @@ const Header = ({ userId, orgs }: { userId: string; orgs: Organization[] }) => {
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/settings" className="w-full">
+                  Settings
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={handleSignOut}

@@ -47,16 +47,16 @@ const Sidebar = ({
   return (
     <aside
       className={cn(
-        "hidden border-r md:block flex-1 py-4 sticky top-14 sm-height px-4 2xl:px-0 pb-20",
+        "hidden border-r md:block flex-1 py-4 sticky top-14 sm-height px-4 2xl:px-0 pb-20  dark:border-border",
         storageKey === "mobile-nav" && "block border-r-0 pt-20"
       )}
     >
       <div className="flex-1  h-full pr-2">
         <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between dark:text-neutral-400">
             <p>Organizations</p>
             <Link href="/select-org">
-              <button className="w-8 h-8 center hover:bg-neutral-200 rounded transition-all duration-150">
+              <button className="w-8 h-8 center hover:bg-neutral-200 dark:hover:bg-lightBackground rounded transition-all duration-150">
                 <Plus className="w-4 h-4" />
               </button>
             </Link>

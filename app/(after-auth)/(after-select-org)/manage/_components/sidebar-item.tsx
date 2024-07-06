@@ -39,11 +39,11 @@ const SidebarItem = ({
   if (!isMounted) return null;
 
   return (
-    <AccordionItem value={organization.key} className="border-none py-2">
+    <AccordionItem value={organization.key} className="border-none py-1">
       <AccordionTrigger
         onClick={() => onExpand(organization.key)}
         className={cn(
-          "flex items-center gap-x-2 p-1.5 text-neutral-700 rounded-md hover:bg-neutral-500/10 transition-all duration-150 text-start no-underline hover:no-underline w-fit",
+          "flex items-center gap-x-2 p-1.5 text-neutral-700 rounded-md hover:bg-neutral-500/10 dark:hover:bg-lightBackground transition-all duration-150 text-start no-underline hover:no-underline w-fit",
           isActive && !isExpanded && "bg-neutral-500/10 text-neutral-700"
         )}
       >
@@ -56,11 +56,13 @@ const SidebarItem = ({
               className="object-cover "
             />
           </div>
-          <span className="font-medium text-sm ">{organization.name}</span>
+          <span className="font-medium text-sm dark:text-neutral-400">
+            {organization.name}
+          </span>
         </div>
       </AccordionTrigger>
 
-      <AccordionContent className="text-neutral-700">
+      <AccordionContent className="text-neutral-700 pt-1">
         {routes.map((route) => {
           //some code here
           const Icon = icons[route.icon as keyof typeof icons];
@@ -69,7 +71,7 @@ const SidebarItem = ({
             <Link
               href={route.href}
               className={cn(
-                "flex items-center gap-x-2 px-7 py-[5px] rounded-sm",
+                "flex items-center gap-x-2 px-7 py-[5px] rounded-sm dark:text-neutral-400",
                 pathname === route.href && "bg-neutral-500/10 text-neutral-700"
               )}
               key={route.label}
