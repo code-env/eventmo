@@ -28,8 +28,7 @@ const SidebarItem = ({
   onExpand,
 }: sidebarItemProps) => {
   const pathname = usePathname();
-  const path = pathname.split("/")[2];
-  const routes = sidebarRoutes(path);
+  const routes = sidebarRoutes(organization.key);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
