@@ -11,7 +11,7 @@ const OrgEvents = async ({ orgKey }: { orgKey: string }) => {
   if (events.length === 0)
     return (
       <div className="h-full calc-height  center">
-        <div className="h-[40%] w-1/2 bg-white rounded-lg border center"></div>
+        <div className="h-[40%] w-1/2 bg-background/50 rounded-lg border-border border center"></div>
       </div>
     );
 
