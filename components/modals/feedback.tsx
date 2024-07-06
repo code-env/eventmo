@@ -61,7 +61,7 @@ const Feedback = ({ userId }: { userId: string }) => {
       <DialogTrigger asChild>
         <div
           className={cn(
-            "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary cursor-pointer"
+            "flex items-center gap-x-2 p-1.5 text-neutral-700 rounded-md hover:bg-neutral-500/10 transition-all duration-150 text-start no-underline hover:no-underline cursor-pointer"
           )}
         >
           <MessageSquareHeart className="h-4 w-4" />

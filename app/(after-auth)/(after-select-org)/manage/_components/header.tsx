@@ -19,8 +19,10 @@ import { sidebarRoutes } from "@/constants";
 import SidebarItem from "./sidebar-item";
 import CreateNewProject from "@/components/modals/create-project";
 import Feedback from "@/components/modals/feedback";
+import Sidebar from "./sidebar";
+import { Organization } from "@prisma/client";
 
-const Header = ({ userId }: { userId: string }) => {
+const Header = ({ userId, orgs }: { userId: string; orgs: Organization[] }) => {
   const { signOut } = useClerk();
   const pathname = usePathname();
   const routes = sidebarRoutes(pathname.split("/")[2]);
@@ -46,18 +48,11 @@ const Header = ({ userId }: { userId: string }) => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="flex flex-col">
-            <nav className="grid gap-2 text-lg font-medium">
-              <Logo />
-              {routes.map((route, index) => (
-                <SidebarItem
-                  href={route.href}
-                  icon={route.icon as keyof typeof icons}
-                  label={route.label}
-                  key={index}
-                />
-              ))}
-              <Feedback userId={userId} />
-            </nav>
+            <Sidebar
+              userId={userId}
+              storageKey="mobile-nav"
+              organizations={orgs}
+            />
           </SheetContent>
         </Sheet>
         <div className="flex gap-3 items-center">
