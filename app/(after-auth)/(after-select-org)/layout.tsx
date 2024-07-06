@@ -9,9 +9,9 @@ import GlobalProvider from "@/providers/after-auth-provider";
 
 const MangeLayout = async ({ children }: { children: ReactNode }) => {
   const user = await getCurrentUser();
+  const organizaitons = await useOrganizations();
 
   if (!user) return;
-  const organizaitons = await useOrganizations();
 
   return (
     <GlobalProvider>
