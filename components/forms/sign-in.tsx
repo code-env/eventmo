@@ -14,12 +14,12 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/validations";
+import { loginSchema } from "@/validations";
 import Link from "next/link";
 import { useSignIn } from "@clerk/nextjs";
 import { toast } from "sonner";
-import Heading from "@/app/(marketing)/_components/heading";
-import Or from "./or";
+import Heading from "@/components/shared/heading";
+import Or from "@/components/shared/or";
 import { OAuthSignIn } from "./oauth-signin";
 
 const SignIn = () => {

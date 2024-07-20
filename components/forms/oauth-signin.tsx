@@ -1,11 +1,11 @@
 "use client";
-import { Loading } from "@/components/loading";
-import { GitHub, Google } from "@/components/ui/icons";
+import { Loading } from "@/components/shared/loading";
+import { GitHub, Google } from "@/components/shared/icons";
 import { toast } from "sonner";
 import { useSignIn } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
 import * as React from "react";
-import { OAuthButton } from "./oauth-button";
+import { OAuthButton } from "@/components/shared/oauth-button";
 
 export function OAuthSignIn() {
   const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null);

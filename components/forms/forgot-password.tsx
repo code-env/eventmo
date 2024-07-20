@@ -6,7 +6,6 @@ import type { NextPage } from "next";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const ForgotPaswordClient: NextPage = () => {
