@@ -21,11 +21,6 @@ export const sidebarRoutes = (key: string) => {
             href: `/manage/${key}/settings`,
             icon: "Settings2",
           },
-          {
-            label: "billing",
-            href: `/manage/${key}/billing`,
-            icon: "CreditCard",
-          },
         ],
       },
       {
@@ -40,6 +35,11 @@ export const sidebarRoutes = (key: string) => {
             label: "files",
             href: `/manage/${key}/files`,
             icon: "FolderCog",
+          },
+          {
+            label: "billing",
+            href: `/manage/${key}/billing`,
+            icon: "CreditCard",
           },
         ],
       },

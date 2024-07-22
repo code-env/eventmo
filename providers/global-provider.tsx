@@ -7,10 +7,10 @@ import NextTopLoader from "nextjs-toploader";
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <>
+    <div className="flex w-full">
       <Toaster />
       <NextTopLoader
-        color="black"
+        color="#7c3aed"
         initialPosition={0.08}
         crawlSpeed={200}
         height={3}
@@ -25,7 +25,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       >
         {children}
       </ThemeProvider>
-    </>
+    </div>
   );
 };
 

@@ -2,6 +2,7 @@
 
 import { Organization } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
+import { ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -26,18 +27,21 @@ const SidebarHeader = ({
   return (
     <AnimatePresence>
       <motion.div
-        className="border p-2 rounded-lg h-14"
+        className="border p-2 rounded-lg h-14 flex items-center cursor-pointer hover:bg-muted/50 slowmo justify-between bg-background"
         onClick={() => setIsClicked((prev) => !prev)}
       >
         <div className="flex gap-2 items-center">
           <div className="h-10 w-10 min-w-10 relative rounded-md overflow-hidden">
             <Image fill src={activeOrg?.imageUrl!} alt="" />
           </div>
-          <div className="flex flex-col gap-1">
-            <p>{activeOrg?.name}</p>
-            <span>{activeOrg?.plan}</span>
+          <div className="flex flex-col">
+            <p className="font-semibold">{activeOrg?.name}</p>
+            <span className="text-xs text-primary">
+              {activeOrg?.plan === "FREE" ? "Free plan" : activeOrg?.plan}
+            </span>
           </div>
         </div>
+        <ChevronsUpDown className="w-4 h-4 text-neutral-500" />
       </motion.div>
     </AnimatePresence>
   );
