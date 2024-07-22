@@ -17,12 +17,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerSchema } from "@/lib/validations";
+import { registerSchema } from "@/validations";
 import OTP from "@/components/forms/otp";
 import { toast } from "sonner";
 import { OAuthSignUp } from "./oauth-signup";
-import Heading from "@/app/(marketing)/_components/heading";
-import Or from "./or";
+import Heading from "@/components/shared/heading";
+import Or from "@/components/shared/or";
 
 const Register = () => {
   const { isLoaded, signUp } = useSignUp();

@@ -14,7 +14,6 @@ model User {
   profilePicture String?
   clerkId        String  @unique
   isPaid         Boolean @default(false)
-  payment        Payment @default(NONE)
 
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
@@ -52,6 +51,7 @@ model Organization {
 
   members Member[]
   events  Event[]
+  plan Payment @default(FREE)
 
   @@index([creatorId])
 }
@@ -89,7 +89,7 @@ enum ROLE {
 }
 
 enum Payment {
-  NONE
+  FREE
   MONTHLY
   YEARLY
   FOREVER

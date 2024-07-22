@@ -2,7 +2,7 @@
 
 import React from "react";
 import * as z from "zod";
-import { orgCreation } from "@/lib/validations";
+import { orgCreation } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
-import { Loading } from "../loading";
+import { Loading } from "@/components/shared/loading";
 import { Button } from "../ui/button";
 import FileUpload from "../shared/file-upload";
 import { useRouter } from "next/navigation";

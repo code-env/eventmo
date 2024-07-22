@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { getCurrentUser } from "@/lib/current-user";
+import { getCurrentUser } from "@/hooks/use-user";
 import { db } from "@/lib/db";
 import { ROLE } from "@prisma/client";
-import { generateId } from "@/actions";
+import { generateId } from "@/actions/generate-id";
 import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {

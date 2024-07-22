@@ -5,9 +5,9 @@ import { useSignUp } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
 import * as React from "react";
 
-import { Loading } from "@/components/loading";
-import { GitHub, Google } from "@/components/ui/icons";
-import { OAuthButton } from "./oauth-button";
+import { Loading } from "@/components/shared/loading";
+import { GitHub, Google } from "@/components/shared/icons";
+import { OAuthButton } from "@/components/shared/oauth-button";
 
 export function OAuthSignUp() {
   const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null);
