@@ -27,9 +27,9 @@ import { orgCreation } from "@/validations";
 import { useState } from "react";
 import FileUpload from "../shared/file-upload";
 import { Plus } from "lucide-react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Loading } from "../shared/loading";
+import { createOrg } from "@/actions/organization";
 
 const CreateOrgModal = () => {
   const router = useRouter();
@@ -40,13 +40,19 @@ const CreateOrgModal = () => {
 
   async function onSubmit(values: z.infer<typeof orgCreation>) {
     try {
-      const { data } = await axios.post("/api/organization", values);
+      const promise = createOrg(values.name, values.imageUrl, "");
 
-      if (data) {
-        return router.push(`/manage/${data.key}`);
-      }
-
-      console.log(data);
+      toast.promise(promise, {
+        loading: "Creating...",
+        error: (message) => {
+          return `something went wrong ${message}`;
+        },
+        success: (org) => {
+          setIsOpen(false);
+          router.push(`/manage/${org.key}`);
+          return `${org.name} created`;
+        },
+      });
     } catch (error: any) {
       console.log(error.message);
     }

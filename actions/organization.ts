@@ -5,7 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { ROLE } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function CreateOrg(name: string, imageUrl: string, key: string) {
+export async function createOrg(name: string, imageUrl: string, key: string) {
   const user = await currentUser();
 
   if (!user) throw new Error("Unathorized");
