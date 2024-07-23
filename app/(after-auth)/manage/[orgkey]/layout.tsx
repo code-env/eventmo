@@ -15,7 +15,7 @@ const AfterAuthLayOut = async ({ children }: { children: ReactNode }) => {
       <div className="bg-muted w-full">
         <div className="max-w-7xl mx-auto w-full flex">
           <Sidebar />
-          <div className="flex-1 bg-background">
+          <div className="flex-1 bg-background border-border border-r dark:border-neutral-700">
             <NavHeader />
             {children}
           </div>

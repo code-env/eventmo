@@ -27,15 +27,29 @@ import { orgCreation } from "@/validations";
 import { useState } from "react";
 import FileUpload from "../shared/file-upload";
 import { Plus } from "lucide-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { Loading } from "../shared/loading";
 
 const CreateOrgModal = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<z.infer<typeof orgCreation>>({
     resolver: zodResolver(orgCreation),
   });
 
-  async function onSubmit(data: z.infer<typeof orgCreation>) {
-    console.log("something is going on");
+  async function onSubmit(values: z.infer<typeof orgCreation>) {
+    try {
+      const { data } = await axios.post("/api/organization", values);
+
+      if (data) {
+        return router.push(`/manage/${data.key}`);
+      }
+
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 
   const {
@@ -45,7 +59,7 @@ const CreateOrgModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="flex flex-col gap-5 text-neutral-400 group slowmo items-center hover:bg-muted p-10 cursor-pointer rounded-lg border border-border">
+        <div className="flex flex-col gap-5 text-neutral-400 group slowmo items-center hover:bg-muted p-10 cursor-pointer rounded-lg border border-border border-dashed hover:border-solid">
           <div className="w-full flex items-center justify-center">
             <Plus className="w-10 h-10 group-hover:text-neutral-600 slowmo" />
           </div>
@@ -104,7 +118,7 @@ const CreateOrgModal = () => {
 
             <DialogFooter>
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                Create project
+                {isSubmitting ? <Loading /> : "Create new organization"}
               </Button>
             </DialogFooter>
           </form>
