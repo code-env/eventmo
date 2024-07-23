@@ -1,3 +1,4 @@
+import NavHeader from "@/components/shared/navbar/header";
 import Sidebar from "@/components/shared/sidebar";
 import { getCurrentUser } from "@/hooks/use-user";
 import GlobalProvider from "@/providers/global-provider";
@@ -11,10 +12,13 @@ const AfterAuthLayOut = async ({ children }: { children: ReactNode }) => {
 
   return (
     <GlobalProvider>
-      <div className="bg-muted w-full dark:bg-black/5">
+      <div className="bg-muted w-full">
         <div className="max-w-7xl mx-auto w-full flex">
           <Sidebar />
-          {children}
+          <div className="flex-1 bg-background border-border border-r dark:border-neutral-700">
+            <NavHeader />
+            {children}
+          </div>
         </div>
       </div>
     </GlobalProvider>

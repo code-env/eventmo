@@ -19,21 +19,19 @@ const SidebarItem = ({ href, icon, label }: sidebarItemProps) => {
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-3 rounded-lg relative px-3 py-2 transition-all text-black dark:text-white",
+        "flex items-center gap-3 rounded-lg relative px-3 py-2 transition-all text-muted-foreground slowmo  border-transparent hover:bg-white hover:dark:text-background group border",
         {
-          "before:absolute before:-left-5 before:top-0 before:bg-primary before:w-1  before:h-full before:rounded-r-lg bg-background border border-border":
+          "before:absolute before:-left-5 before:top-0 before:bg-primary before:w-1  before:h-full before:rounded-r-lg  border border-border bg-background dark:bg-primary text-black":
             isActive,
         }
       )}
     >
       <Icon
-        className={cn("h-4 w-4 text-", {
-          "text-muted-foreground": isActive,
+        className={cn("h-4 w-4 group-hover:opacity-90 slowmo", {
+          "opacity-50": isActive,
         })}
       />
-      <span className={cn("capitalize", { "text-primary": isActive })}>
-        {label}
-      </span>
+      <span className={cn("capitalize")}>{label}</span>
     </Link>
   );
 };

@@ -27,7 +27,7 @@ const SidebarHeader = ({
   return (
     <AnimatePresence>
       <motion.div
-        className="border p-2 rounded-lg h-14 flex items-center cursor-pointer hover:bg-muted/50 slowmo justify-between bg-background"
+        className="border p-2 rounded-lg h-14 flex items-center cursor-pointer hover:bg-white/90 slowmo justify-between bg-white text-neutral-700"
         onClick={() => setIsClicked((prev) => !prev)}
       >
         <div className="flex gap-2 items-center">
@@ -36,7 +36,7 @@ const SidebarHeader = ({
           </div>
           <div className="flex flex-col">
             <p className="font-semibold">{activeOrg?.name}</p>
-            <span className="text-xs text-primary">
+            <span className="text-xs text-neutral-500">
               {activeOrg?.plan === "FREE" ? "Free plan" : activeOrg?.plan}
             </span>
           </div>
