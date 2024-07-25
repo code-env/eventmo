@@ -6,6 +6,8 @@ import { Button } from "./ui/button";
 import CreateOrgModal from "./modal/create-org";
 import { useOrganizationsWithMembersAndEvent } from "@/hooks/use-org";
 import { Member } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import { getCurrentUser } from "@/hooks/use-user";
 
 const Organizations = async () => {
   const organizations = await useOrganizationsWithMembersAndEvent();
@@ -26,14 +28,19 @@ interface OrganizationCardsProps {
   data: Awaited<ReturnType<typeof useOrganizationsWithMembersAndEvent>>;
 }
 
-function OrganizationCards(props: OrganizationCardsProps) {
+async function OrganizationCards(props: OrganizationCardsProps) {
   const { data } = props;
+  const user = await getCurrentUser();
 
   return (
     <div className="grid gap-5 grid-cols-3">
       {data.length > 0 &&
         data.map((org) => {
           const members = org.members;
+
+          const hasRightToDelete = members.find(
+            (mem) => org.creatorId === user?.id
+          );
 
           const membersWithoutUser = members.filter(
             (mem) => mem.userId !== org.creatorId
@@ -66,11 +73,13 @@ function OrganizationCards(props: OrganizationCardsProps) {
                     </span>
                   </div>
                 </Link>
-                <Button variant="destructive" size="icon">
-                  <Trash className="w-4 h-4" />
-                </Button>
+                {hasRightToDelete?.role === "ADMIN" && (
+                  <Button variant="destructive" size="icon">
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
-              {membersWithoutUser.length === 0 ? (
+              {membersWithoutUser.length !== 0 ? (
                 <Button>Invite a new member</Button>
               ) : (
                 <UserCard members={membersWithoutUser} />
@@ -83,7 +92,22 @@ function OrganizationCards(props: OrganizationCardsProps) {
 }
 
 function UserCard({ members }: { members: Member[] }) {
-  return <div></div>;
+  return (
+    <div className="flex">
+      {Array.from({ length: 5 }).map((_, index) => {
+        //some code here
+
+        return (
+          <div
+            key={index}
+            className="h-10 w-10 rounded-full bg-red-500 -mr-2 border flex items-center justify-center"
+          >
+            {index + 1}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default Organizations;
