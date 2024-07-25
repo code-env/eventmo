@@ -9,14 +9,14 @@ const ManageOrgs = async () => {
 
   if (organizations.length === 0)
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center">
         <CreateOrg />
       </div>
     );
 
   return (
-    <div className="h-screen py-20">
-      <Organizations organizations={organizations} />
+    <div className="min-h-screen py-20 w-full">
+      <Organizations />
     </div>
   );
 };

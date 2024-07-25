@@ -46,3 +46,25 @@ export async function useOrganizations() {
     return error.message;
   }
 }
+
+export async function useOrganizationsWithMembersAndEvent() {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const organizations = await db.organization.findMany({
+    where: {
+      members: {
+        some: {
+          userId: user?.id,
+        },
+      },
+    },
+    include: {
+      members: true,
+      events: true,
+    },
+  });
+
+  return organizations;
+}

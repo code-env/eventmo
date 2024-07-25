@@ -5,14 +5,16 @@ import { UploadDropzone } from "@/utils/uploadthing";
 import "@uploadthing/react/styles.css";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { UseFormSetValue } from "react-hook-form";
 
 interface FileUploadProps {
   onChange: (url?: string) => void;
   value: string;
+  setKey: (val: string) => void;
   endPoint: "orgProfile" | "projectSubmission" | "messageAttachment";
 }
 
-const FileUpload = ({ onChange, value, endPoint }: FileUploadProps) => {
+const FileUpload = ({ onChange, value, endPoint, setKey }: FileUploadProps) => {
   const fileType = value?.split(".").pop();
 
   if (value && fileType !== "pdf") {
@@ -37,7 +39,10 @@ const FileUpload = ({ onChange, value, endPoint }: FileUploadProps) => {
 
   return (
     <UploadDropzone
-      onClientUploadComplete={(res) => onChange(res?.[0].url)}
+      onClientUploadComplete={(res) => {
+        setKey(res[0].key);
+        onChange(res?.[0].url);
+      }}
       endpoint={endPoint}
       className="dropzone"
       appearance={{

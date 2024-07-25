@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { Sparkles } from "lucide-react";
 
 const Logo = ({ isAuth }: { isAuth?: boolean }) => {
   return (
@@ -7,20 +7,7 @@ const Logo = ({ isAuth }: { isAuth?: boolean }) => {
       href={isAuth ? "/manage/" : "/"}
       className="hidden md:flex items-center gap-x-2 font-semibold"
     >
-      <Image
-        src="/logo-black.png"
-        height="30"
-        width="30"
-        alt="Logo"
-        className="dark:hidden"
-      />
-      <Image
-        src="/logo-white.png"
-        height="30"
-        width="30"
-        alt="Logo"
-        className="hidden dark:block"
-      />
+      <Sparkles className="text-primary" />
       <span>eventmo</span>
     </Link>
   );

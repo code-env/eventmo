@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
 import * as z from "zod";
-import { orgCreation } from "@/validations";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { orgCreation } from "@/validations";
 import {
   Form,
   FormControl,
@@ -17,10 +19,11 @@ import { Loading } from "@/components/shared/loading";
 import { Button } from "../ui/button";
 import FileUpload from "../shared/file-upload";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { createOrg } from "@/actions/organization";
 
 const CreateOrg = () => {
   const router = useRouter();
+  const [key, setKey] = useState("");
   const form = useForm<z.infer<typeof orgCreation>>({
     resolver: zodResolver(orgCreation),
   });
@@ -31,13 +34,18 @@ const CreateOrg = () => {
 
   async function onSubmit(values: z.infer<typeof orgCreation>) {
     try {
-      const { data } = await axios.post("/api/organization", values);
+      const promise = createOrg(values.name, values.imageUrl, key);
 
-      if (data) {
-        return router.push(`/manage/${data.key}`);
-      }
-
-      console.log(data);
+      toast.promise(promise, {
+        loading: "Creating...",
+        error: (message) => {
+          return `something went wrong ${message}`;
+        },
+        success: (org) => {
+          router.push(`/manage/${org.key}`);
+          return `${org.name} created`;
+        },
+      });
     } catch (error: any) {
       console.log(error.message);
     }
@@ -58,6 +66,7 @@ const CreateOrg = () => {
                   <FormControl>
                     <FileUpload
                       endPoint="orgProfile"
+                      setKey={setKey}
                       onChange={field.onChange}
                       value={field.value}
                     />

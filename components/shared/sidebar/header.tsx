@@ -20,7 +20,7 @@ const SidebarHeader = ({
 
   useEffect(() => {
     setActiveOrg(organizations.find((org) => org.key === orgKey));
-  }, []);
+  }, [orgKey]);
 
   if (orgKey === undefined) return;
 
@@ -32,7 +32,12 @@ const SidebarHeader = ({
       >
         <div className="flex gap-2 items-center">
           <div className="h-10 w-10 min-w-10 relative rounded-md overflow-hidden">
-            <Image fill src={activeOrg?.imageUrl!} alt="" />
+            <Image
+              fill
+              src={activeOrg?.imageUrl!}
+              alt=""
+              className="object-cover"
+            />
           </div>
           <div className="flex flex-col">
             <p className="font-semibold">{activeOrg?.name}</p>

@@ -23,6 +23,8 @@ export async function getCurrentUser() {
       },
     });
 
+    console.log("user:", userInDb);
+
     return createNewUserInDb;
   } catch (error: any) {
     console.log(error.message);

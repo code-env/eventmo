@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
-    const { name, imageUrl } = await req.json();
+    const { name, imageUrl, imageKey } = await req.json();
 
     if (!name || !imageUrl) {
       return new NextResponse("This fields are required", { status: 400 });
@@ -24,6 +24,7 @@ export async function POST(req: Request) {
         imageUrl,
         creatorId: profile.id,
         key: generateId(),
+        imageKey,
         members: {
           create: [
             {

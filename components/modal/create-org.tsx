@@ -34,13 +34,14 @@ import { createOrg } from "@/actions/organization";
 const CreateOrgModal = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [key, setKey] = useState("");
   const form = useForm<z.infer<typeof orgCreation>>({
     resolver: zodResolver(orgCreation),
   });
 
   async function onSubmit(values: z.infer<typeof orgCreation>) {
     try {
-      const promise = createOrg(values.name, values.imageUrl, "");
+      const promise = createOrg(values.name, values.imageUrl, key);
 
       toast.promise(promise, {
         loading: "Creating...",
@@ -65,14 +66,11 @@ const CreateOrgModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="flex flex-col gap-5 text-neutral-400 group slowmo items-center hover:bg-muted p-10 cursor-pointer rounded-lg border border-border border-dashed hover:border-solid">
-          <div className="w-full flex items-center justify-center">
-            <Plus className="w-10 h-10 group-hover:text-neutral-600 slowmo" />
+        <Button asChild>
+          <div className="absolute right-20 bottom-20 bg-primary min-h-14 w-14 text-background flex items-center justify-center rounded-full shadow-md cursor-pointer">
+            <Plus className="w-8 h-8 group-hover:text-neutral-600 slowmo" />
           </div>
-          <h1 className="text-neutral-400 group-hover:text-neutral-600 slowmo">
-            Create new organization
-          </h1>
-        </div>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -96,6 +94,7 @@ const CreateOrgModal = () => {
                       <FileUpload
                         endPoint="orgProfile"
                         onChange={field.onChange}
+                        setKey={setKey}
                         value={field.value}
                       />
                     </FormControl>

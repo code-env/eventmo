@@ -15,7 +15,6 @@ export const feedbackSchema = z.object({
   message: z.string().min(10, { message: "feedback message too short" }),
 });
 
-
 export const registerSchema = z.object({
   username: z
     .string()

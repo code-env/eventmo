@@ -4,8 +4,13 @@ import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { ROLE } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { generateId } from "./generate-id";
 
-export async function createOrg(name: string, imageUrl: string, key: string) {
+export async function createOrg(
+  name: string,
+  imageUrl: string,
+  imageKey: string
+) {
   const user = await currentUser();
 
   if (!user) throw new Error("Unathorized");
@@ -23,7 +28,8 @@ export async function createOrg(name: string, imageUrl: string, key: string) {
       imageUrl,
       name,
       creatorId: userInDb.id,
-      key,
+      imageKey,
+      key: generateId(),
       members: {
         create: [
           {
