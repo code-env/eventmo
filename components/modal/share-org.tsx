@@ -1,133 +1,66 @@
 "use client";
 
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { orgCreation } from "@/validations";
 import { useState } from "react";
-import FileUpload from "../shared/file-upload";
-import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { Loading } from "../shared/loading";
-import { createOrg } from "@/actions/organization";
+import { Input } from "../ui/input";
+import { Check, Copy } from "lucide-react";
+import { useOrigin } from "@/hooks/use-origin";
+import { usePathname } from "next/navigation";
 
 const ShareOrg = () => {
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [key, setKey] = useState("");
-  const form = useForm<z.infer<typeof orgCreation>>({
-    resolver: zodResolver(orgCreation),
-  });
+  const [isCopy, setIsCopy] = useState(false);
 
-  async function onSubmit(values: z.infer<typeof orgCreation>) {
-    try {
-      const promise = createOrg(values.name, values.imageUrl, key);
+  const pathname = usePathname();
 
-      toast.promise(promise, {
-        loading: "Creating...",
-        error: (message) => {
-          return `something went wrong ${message}`;
-        },
-        success: (org) => {
-          setIsOpen(false);
-          router.push(`/manage/${org.key}`);
-          return `${org.name} created`;
-        },
-      });
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  }
+  const inviteCode = pathname.split("/")[2];
 
-  const {
-    formState: { isSubmitting },
-  } = form;
+  const origin = useOrigin();
+
+  const inviteUrl = `${origin}/invite/${inviteCode}`;
+
+  const onCopy = () => {
+    navigator.clipboard.writeText(inviteUrl);
+    setIsCopy(true);
+
+    setTimeout(() => {
+      setIsCopy(false);
+    }, 1000);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button asChild>
-          <div className="absolute right-20 bottom-20 bg-primary min-h-14 w-14 text-background flex items-center justify-center rounded-full shadow-md cursor-pointer">
-            <Plus className="w-8 h-8 group-hover:text-neutral-600 slowmo" />
-          </div>
-        </Button>
+        <Button>Share</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new Project</DialogTitle>
+          <DialogTitle>Invite someone</DialogTitle>
           <DialogDescription>
-            Start a new project that&apos;s sync to your terminal
+            Invite a collegue or peer to the organization
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="grid gap-4 py-4"
-          >
-            <div className="flex items-center justify-center text-center race">
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <FileUpload
-                        endPoint="orgProfile"
-                        onChange={field.onChange}
-                        setKey={setKey}
-                        value={field.value}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Organization name..."
-                      {...field}
-                      disabled={isSubmitting}
-                      className="disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <DialogFooter>
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? <Loading /> : "Create new organization"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+        <div className="w-full flex items-center gap-4">
+          <Input
+            className="border-0 bg-muted ring-0 focus-within:ring-0"
+            value={inviteUrl}
+          />
+          <Button size="icon" variant="ghost" onClick={() => onCopy()}>
+            {isCopy ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

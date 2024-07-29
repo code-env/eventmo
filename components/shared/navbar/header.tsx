@@ -1,5 +1,6 @@
 "use client";
 
+import ShareOrg from "@/components/modal/share-org";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -15,7 +16,9 @@ const NavHeader = () => {
   return (
     <div className="border-border h-14 border-b flex items-center px-8 justify-between">
       <h1 className="capitalize font-semibold text-2xl">{path}</h1>
-      <div className="flex items-center gap-3"></div>
+      <div className="flex items-center gap-3">
+        <ShareOrg />
+      </div>
     </div>
   );
 };
