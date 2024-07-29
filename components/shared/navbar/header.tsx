@@ -13,8 +13,9 @@ const NavHeader = () => {
   }
 
   return (
-    <div className="border-border h-14 border-b flex items-center px-8">
+    <div className="border-border h-14 border-b flex items-center px-8 justify-between">
       <h1 className="capitalize font-semibold text-2xl">{path}</h1>
+      <div className="flex items-center gap-3"></div>
     </div>
   );
 };
