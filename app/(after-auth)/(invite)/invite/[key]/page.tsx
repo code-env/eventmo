@@ -30,5 +30,5 @@ const InvitePage = async ({ params }: { params: { key: string } }) => {
 
   return redirect(`/manage/${organization.key}`);
 };
-
+loca
 export default InvitePage;
